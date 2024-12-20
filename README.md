@@ -12,6 +12,14 @@ Welcome to the MoMeEnT-Project repository! This project is part of the MoMeEnT i
 4. [How to Cite This Work](#how-to-cite-this-work)
 5. [License](#license)
 
+# Overview of simulation-driven adaptive survey
+
+This is a simplified version. The original version used in the paper XXX, was coupled with a Qualtrics survey platform so that .. In figure we report the original structure. 
+
+![Alt text](images/survey_framework.png)
+
+To let you test this approach on your computer we implemented the following simplified version. This is fully implemented in a simplified way using Flask. 
+
 ## Installation
 
 Before running the application, we recommend setting up a virtual environment to manage project dependencies and avoid conflicts with other Python projects on your system.
