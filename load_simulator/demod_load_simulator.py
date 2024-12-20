@@ -55,7 +55,8 @@ def get_avg_load_profile(
         raise ValueError("Appliance must be 'WASHING_MACHINE' or 'DISH_WASHER'.")
 
     # Define household subgroups and counts
-    household_subgroups = [{'n_residents': n_residents, 'household_type': household_type}]
+    household_subgroups = [{'n_residents': n_residents, 
+                            'household_type': household_type}]
     household_counts = [n_households]
 
     # Initialize the activity simulator
