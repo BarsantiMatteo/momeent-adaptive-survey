@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
+
+		<title>MoMeEnt</title>
+  
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+        <!--D3.js-->
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script src="https://unpkg.com/d3-simple-slider"></script>
+
+        <!--ajax-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+
+    <div class="section s3">
+        <div class="slide">
+            <div class="page-content">
+                <div id="exp1">
+                    <p style="margin-bottom: 30px;"> 
+                        Referring to the time of the day, when is the {{appliance}} run during week days?
+                        <br><br>
+                        <em> * Please move the sliders up or down to indicate how often you use the {{appliance}} at different times of the day </em>
+                    </p>
+
+                    </div>
+                    <!--D3 bar chart visualization-->
+                    <div class="visualization">
+                        <div class="visualization-column1">
+                            <div class="chart_container">
+                                <div id="left-side-buffer"></div>
+                                <div id="bar-chart"> </div>
+                            </div>
+                            <div class="sliders-section">
+                                <ul class="sliders-labels">
+                                    <li>Always</li>
+                                    <li>Often</li>
+                                    <li>Sometimes</li>
+                                    <li>Rarely</li>
+                                    <li>Never</li>
+                                </ul>
+                                <div class="slider-container">
+                                    <div class="slider" >
+                                        <input type="range" id=morningSlider min="0" max="4" value="0" step="1" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="middaySlider" id=middaySlider min="0" max="4" value="0" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="afternoonSlider" id=afternoonSlider min="0" max="4" value="0" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="eveningSlider" id=eveningSlider min="0" max="4" value="0" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="nightSlider" id=nightSlider min="0" max="4" value="0" autocomplete="off" orient="vertical"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="clear:both">
+                        <p style="margin-top: 100px;"><button class="link-btn" id="link-to-quests" disabled>Next page</button></p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+	</div>
+
+    <!--JS scripts-->
+    <script src="{{ url_for('static', filename='js/barChart_0.js')}}"></script>
+    
+</body>

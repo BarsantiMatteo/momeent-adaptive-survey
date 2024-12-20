@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+    
+    <div class="questions-form"> 
+        <form  action="/questions_usage" method="get">
+            
+            <label id="hh_type_1_2">
+            <p><strong>How many people live in your household (including you)?</strong></p>
+            <!--Single answer-->
+            <label id="hh_type_4"><input type="radio" id="hh_size" name="hh_size" value="2">2&emsp;&emsp;</label>
+            <input type="radio" id="hh_size" name="hh_size" value="3">3&emsp;&emsp;
+            <input type="radio" id="hh_size" name="hh_size" value="4">4&emsp;&emsp;
+            <input type="radio" id="hh_size" name="hh_size" value="5">5 or more&emsp;&emsp;
+            <br><br>
+            </label>
+
+            <p><strong>To continue, please indicate which of the washing machine and dishwasher you want the next questions to address.</strong></p>
+            <!--Single answer-->
+            <input type="radio" name="appliance" value="WASHING_MACHINE">Washing machine&emsp;&emsp;
+            <input type="radio" name="appliance" value="DISH_WASHER">Dish washer&emsp;&emsp;
+            
+            
+            <p style="margin-top: 50px;">     
+                <input class="link-btn button" type="submit" value="Next page" />
+            </p>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/questions.js')}}"></script>
+
+    <script>
+        //var element = document.getElementById('hh_size_quest')
+        var hh_type = {{data.hh_type|tojson}}
+        if(hh_type == 1 || hh_type == 2) {
+            document.getElementById("hh_type_1_2").remove()
+        }
+        else if(hh_type == 4) {
+            document.getElementById("hh_type_4").remove()
+        }
+
+    </script>
+
+</body>

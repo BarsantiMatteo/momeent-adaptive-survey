@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+        <!--D3.js-->
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <!--ajax-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <style>
+            .change {
+                font-size:22px; 
+                padding-bottom: 20px;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="page-header"></div> 
+
+    <div class="section s3">
+        <div class="slide">
+            <div class="page-content">
+                <div id="exp1">
+                    <div id="text">
+                    <p style="margin-bottom: 50px;">
+                        Suppose most people are using too much electricity during afternoon and evening hours, thus, 
+                        the power system is likely to have a black-out. 
+                        <strong>You can reduce the risk of having a blackout</strong>,
+                        for example by reducing electricity usage during peak hours or waiting untill offpeak hours to use electricity.
+                        However, you may face some inconvience. 
+                        <br>
+                       <strong> In this situation, what time of day would you run the {{data.appliance}}? </strong>
+                       <br><br>
+                       <em> * Try to answer as realistically as possible
+                        <br>
+                       * The light red area indicates peak hours.
+                        <br>
+                       * Click the "See Statistics" button to see how much energy you consume during peak hours.
+                        <br>
+                       * Once you have identified the configuration that best suits you, you can proceed by clicking on the "Next Page" button below.  </em> 
+                    </p>
+
+                    </div>
+                    <!--D3 bar chart visualization-->
+                    <div class="visualization">
+                        <div class="visualization-column1">
+                            <div class="chart_container">
+                                <div id="bar-chart-legend"></div>
+                                <div id="bar-chart"> </div>
+                            </div>
+                            <div class="sliders-section" style="margin-left: -142px;">
+                                <ul class="sliders-labels">
+                                    <li>Always</li>
+                                    <li>Often</li>
+                                    <li>Sometimes</li>
+                                    <li>Rarely</li>
+                                    <li>Never</li>
+                                </ul>
+                                <div class="slider-container">
+                                    <div class="slider" >
+                                        <input type="range" id=morningSlider min="0" max="4" step="1" autocomplete="off" orient="vertical"/>
+                                        <datalist id="steplist">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </datalist>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="middaySlider" id=middaySlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="afternoonSlider" id=afternoonSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="eveningSlider" id=eveningSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="nightSlider" id=nightSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="visualization-column2">
+                            <button id="stats-btn" onclick="show_avg()">See statistics</button> 
+                        </div>
+
+
+                        <div class="statistics visualization-column3">
+                            
+                            <div class="sub-stats-upper-txt-peak"><strong>Percentage of energy consumed during peak hours:</strong></div> 
+
+                            <div class="sub-stats" id="stats-title">
+                                For you
+                            </div>
+                            <div class="sub-stats-container sub-stats-grid" id="stats-average">
+                                <div class="sub-stats-item stats-icon" id="stats-icon-you">
+                                    <!--Default icon-->
+                                    <img src="static/img/arrow-decrease-green.png"></img>
+                                </div>
+                                <div class="sub-stats-item stats-nbr" id="stats-nbr-you">
+                                    <!--Default value-->
+                                    <div class="change">Change</div> <div id="sub-stats-nbr-you">?</div>
+                                </div>
+                                <div class="sub-stats-item stats-txt" id="stats-txt-you">
+                                    <div class="stats-old-val" id="stats-old-val"><strong>Old value<br>{{data.old_peak}} %</strong></div>
+                                    <div class="stats-new-val" id="stats-new-val"><strong>New value<br>?</strong></div>
+                                </div>
+
+
+                                <!--Loading Spinner-->
+                                <div class="loader" id="loader" style="display: none;"></div>
+
+                                 
+                            </div>        
+                            
+                            <div id="avg-stats">
+                                <div class="sub-stats" id="stats-title">
+                                    For an average household
+                                </div>
+
+                                <div class="sub-stats-container stats-nbr" id="stats-nbr-avg">
+                                        ?
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both">
+                        <p style="margin-top: 100px;">
+                            <button class="link-btn" id="link-to-quests" disabled>Next page</button> 
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+	</div>
+
+
+    <!--JS scripts-->
+    <script src="{{ url_for('static', filename='js/barChart_2.js')}}"></script>
+    <script>
+        var element = document.getElementById('avg-stats')
+        var group = {{data.group|tojson}}
+        if(group == "TRUE") {
+            element.style.display = 'block'; 
+        }else if(group == "FALSE") {
+            element.style.display = 'none'; 
+        }
+
+        function show_avg() {
+            var avg_peak = {{data.avg_peak|tojson}}
+            let counts=setInterval(updated);
+            let upto=0;
+            function updated(){
+                var count= document.getElementById("stats-nbr-avg");
+                count.innerHTML=++upto;
+                if(upto===Math.abs(Math.ceil(avg_peak))){ clearInterval(counts); }
+                count.innerHTML+= " %"
+            }
+        }  
+    </script>
+</body>

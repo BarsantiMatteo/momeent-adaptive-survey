@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>  		 
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+        <!--D3.js-->
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <!--ajax-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <style>
+            #bar-chart {
+                margin-top: 120px;
+            }
+            .loader {
+                display: none;
+                margin-left: 100px;
+                margin-top: 50px;
+            }
+            .stats-txt {
+                padding: 0px;
+            }
+            .smaller {
+                font-size:20px; 
+                font-weight: bold;
+                color: #555;
+            }
+            .change {
+                margin-top: -15px;
+                padding-bottom: 22px;
+            }
+            .small-txt {
+                font-size: 18px;
+                color: #555;
+            }
+            .stats-icon {
+                padding-top: 40px;
+            }
+            #link-to-quests {
+                margin-top: 150px;
+            }
+            #stats-btn {
+                margin-top: 400px;
+                margin-left: 30px;
+            }
+        </style>
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+
+    <div class="section s3">
+        <div class="slide">
+            <div class="page-content">
+                <div id="exp1">
+                    <div id="text">
+                    <p style="margin-bottom: 50px;">
+                        Suppose you have signed a variable-price energy contract. 
+                        Also, although photovoltaic electricity generation is very high, most people consume too much electricity in the afternoon and evening hours increase the risk of blackouts. 
+                        <strong> You can save on your energy bill, reduce emissions from the energy you consume, 
+                        and reduce the risk of blackouts by changing your washing habits</strong>.  
+                        However, you may face some inconvenience. 
+                        <br>
+                       <strong> In this situation, what time of day would you run the {{data.appliance}}? </strong> 
+                       <br><br>
+                       <em> * Try to answer as realistically as possible
+                        <br>
+                       * Once you have identified the configuration that best suits you, you can proceed by clicking on the "Next Page" button below.  </em> 
+                    </p>
+
+                    </div>
+                    <div class="visualization">
+
+                        <!--D3 bar chart visualization-->
+
+                        <div class="visualization-column1">
+                            <div class="chart_container">
+                                <div id="bar-chart-legend"></div>
+                                <div id="bar-chart"> </div>
+                            </div>
+                            <div class="sliders-section" style="margin-left: -142px;">
+                                <ul class="sliders-labels">
+                                    <li>Always</li>
+                                    <li>Often</li>
+                                    <li>Sometimes</li>
+                                    <li>Rarely</li>
+                                    <li>Never</li>
+                                </ul>
+                                <div class="slider-container">
+                                    <div class="slider" >
+                                        <input type="range" id=morningSlider min="0" max="4" step="1" autocomplete="off" orient="vertical"/>
+                                        <datalist id="steplist">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </datalist>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="middaySlider" id=middaySlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="afternoonSlider" id=afternoonSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="eveningSlider" id=eveningSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+                                    <div class="slider" >
+                                        <input type="range" name="nightSlider" id=nightSlider min="0" max="4" autocomplete="off" orient="vertical"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--See Statistics Button-->
+
+                        <div class="visualization-column2">
+                            <button id="stats-btn"  onclick="show_avg()">See statistics</button> 
+                        </div>
+
+                        <!--Statistics grid - PEER == TRUE-->
+
+                        <div class="combined-stats visualization-column3" id="combined-stats"> <!--combined-stats: grid, column3 for position-->
+                            <!--yearly cost-->
+                            <div class="upper-text-1 sub-stats-upper-txt-cost">
+                            <strong>Yearly energy cost for running the {{data.appliance}}:</strong>
+                            </div>
+
+                            <div class="stats-you-1 sub-stats-container sub-stats-grid"> <!--stats-you-1 for grid, sub-stats-container for border sub-stats-grid for old/new val-->
+                                <div class="sub-stats-item stats-icon" id="icon-cost">
+                                    <!--Default icon-->
+                                    <img src="static/img/arrow-decrease-green.png"></img>
+                                </div>
+                                <div class="sub-stats-item stats-nbr" id="stats-nbr-you-cost">
+                                    <!--Default value-->
+                                    <div class="change smaller">Change</div> <div id="sub-stats-nbr-you-cost">?</div>
+                                </div>
+                                <div class="sub-stats-item stats-txt" id="stats-txt-you-cost">
+                                    <div class="stats-old-val smaller" >Old value<div id="stats-old-val-cost">{{data.old_cost}} {{data.currency}}</div></div>
+                                    <div class="stats-new-val smaller" >New value<div id="stats-new-val-cost">?</div></div>
+                                </div>
+                                <!--Loading Spinner-->
+                                <div class="loader" id="loader"></div>
+                            </div>
+
+                            <div class="stats-avg stats-avg-1 sub-stats-container">
+                                <div class="smaller" style="margin-top: 12px;">For an average household</div>
+                                <div class="combined-stats-nbr-avg" id="stats-nbr-avg-cost">  
+                                    ? 
+                                </div>
+                                <div class="small-txt"></div>
+                            </div>
+
+                            <!--peak hours-->
+                            <div class="upper-text-2 sub-stats-upper-txt-peak">
+                            <strong>Percentage of energy consumed during peak hours:</strong>
+                            </div>
+
+                            <div class="stats-you-2 sub-stats-container sub-stats-grid">
+                                <div class="sub-stats-item stats-icon" id="icon-peak">
+                                    <!--Default icon-->
+                                    <img src="static/img/arrow-decrease-green.png"></img>
+                                </div>
+                                <div class="sub-stats-item stats-nbr" id="stats-nbr-you-peak">
+                                    <!--Default value-->
+                                    <div class="change smaller">Change</div> <div id="sub-stats-nbr-you-peak">?</div>
+                                </div>
+                                <div class="sub-stats-item stats-txt" id="stats-txt-you-peak">
+                                    <div class="stats-old-val smaller" >Old value<div id="stats-old-val-peak">{{data.old_peak}} %</div></div>
+                                    <div class="stats-new-val smaller" >New value<div id="stats-new-val-peak">?</div></div>
+                                </div>
+                                <!--Loading Spinner-->
+                                <div class="loader" id="loader"></div>
+                            </div>
+
+                            <div class="stats-avg stats-avg-2 sub-stats-container">
+                                <div class="smaller" style="margin-top: 12px;">Average household</div>
+                                <div class="combined-stats-nbr-avg" id="stats-nbr-avg-peak">  
+                                    ? 
+                                </div>
+                                <div class="small-txt"></div>
+                            </div>
+
+                            <!--res share-->
+                            <div class="upper-text-3 sub-stats-upper-txt-pv">
+                                <strong>Percentage of energy consumed from PV:</strong>
+                            </div>
+
+                            <div class="stats-you-3 sub-stats-container sub-stats-grid">
+                                <div class="sub-stats-item stats-icon" id="icon-share">
+                                    <!--Default icon-->
+                                    <img src="static/img/arrow-increase-green.png"></img>
+                                </div>
+                                <div class="sub-stats-item stats-nbr" id="stats-nbr-you-share">
+                                    <!--Default value-->
+                                    <div class="change smaller">Change</div> <div id="sub-stats-nbr-you-share">?</div>
+                                </div>
+                                <div class="sub-stats-item stats-txt" id="stats-txt-you-share">
+                                    <div class="stats-old-val smaller" >Old value<div id="stats-old-val-share">{{data.old_share}} %</div></div>
+                                    <div class="stats-new-val smaller" >New value<div id="stats-new-val-share">?</div></div>
+                                </div>
+                                <!--Loading Spinner-->
+                                <div class="loader" id="loader"></div>
+                            </div>
+
+                            <div class="stats-avg stats-avg-3 sub-stats-container">
+                                <div class="smaller" style="margin-top: 12px;">For an average household</div>
+                                <div class="combined-stats-nbr-avg" id="stats-nbr-avg-share">  
+                                    ? 
+                                </div>
+                                <div class="small-txt"></div>
+                            </div>
+                        </div>
+
+                        
+
+                    </div>
+                    
+                    <div style="clear:both">
+                        <p style="margin-top: 100px;">
+                            <button class="link-btn" id="link-to-quests" disabled>Next page</button> 
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+	</div>
+
+
+    <!--JS scripts-->
+    <script src="{{ url_for('static', filename='js/barChart_4.js')}}"></script>
+
+    <script>
+        function show_avg() {
+            document.getElementById("stats-nbr-avg-cost").innerText = Math.ceil({{data.avg_cost|tojson}}) + " " + {{data.currency|tojson}};
+            document.getElementById("stats-nbr-avg-peak").innerText = Math.ceil({{data.avg_peak|tojson}}) + " %";
+            document.getElementById("stats-nbr-avg-share").innerText = Math.ceil({{data.avg_res|tojson}}) + " %";
+        }  
+    </script>
+    <script>    
+        var e1 = document.getElementById('combined-stats')
+        var group = {{data.group|tojson}}
+        if(group == "TRUE") {
+            e1.style.display = 'grid'; 
+        }else if(group == "FALSE") {
+            for(let i=0; i<3; i++) { 
+                document.getElementsByClassName("stats-avg")[i].style.visibility = "hidden"; 
+            }
+            e1.style.gridTemplateColumns = "[v0] 320px [v1] 0px [v2]"
+            e1.style.gridGap = "0px"
+            e1.style.rowGap = "5px"
+            e1.style.marginLeft = "60px";
+            document.getElementById("stats-btn").style.marginLeft = "60px";
+        }
+        
+    </script>
+</body>

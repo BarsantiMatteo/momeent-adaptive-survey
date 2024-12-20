@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+    
+    <div class="questions-form"> 
+        <form  action="/experiment_2" method="get">
+
+            <p><strong>To achieve further economic saving, how likely are you / your household to implement the following actions?</strong></p>
+            <table cellspacing="0" style="width: 100%;"> 
+                <tr>
+                    <th style="width: 50%;"class="highlight-cell"></th>
+                    <th class="highlight-cell">Not at all <br> likely</th> 
+                    <th class="highlight-cell">Not likely</th>
+                    <th class="highlight-cell">Somewhat <br> likely</th>
+                    <th class="highlight-cell">Liekly</th>
+                    <th class="highlight-cell">Very likely</th>
+                </tr>
+                <tr>
+                    <td >To reduce the number of washing cycles per week</td>
+                    <td><input type="radio" name="q1b_r1_1" value="0"></td> 
+                    <td><input type="radio" name="q1b_r1_1" value="1"></td>
+                    <td><input type="radio" name="q1b_r1_1" value="2"></td> 
+                    <td><input type="radio" name="q1b_r1_1" value="3"></td>
+                    <td><input type="radio" name="q1b_r1_1" value="4"></td>
+                </tr>
+                <tr>
+                    <td >To select washing programs that use less energy (e.g., a lower washing temperature)</td>
+                    <td><input type="radio" name="q1b_r1_2" value="0"></td> 
+                    <td><input type="radio" name="q1b_r1_2" value="1"></td>
+                    <td><input type="radio" name="q1b_r1_2" value="2"></td> 
+                    <td><input type="radio" name="q1b_r1_2" value="3"></td>
+                    <td><input type="radio" name="q1b_r1_2" value="4"></td>
+                </tr>
+                <tr>
+                    <td >To select washing programs with lower energy intensity (e.g., a lower washing temperature) during periods when electricity prices are higher</td>
+                    <td><input type="radio" name="q1b_r1_3" value="0"></td> 
+                    <td><input type="radio" name="q1b_r1_3" value="1"></td>
+                    <td><input type="radio" name="q1b_r1_3" value="2"></td> 
+                    <td><input type="radio" name="q1b_r1_3" value="3"></td>
+                    <td><input type="radio" name="q1b_r1_3" value="4"></td>
+                </tr>
+                <tr>
+                    <td >To wash during weekend days if prices are lower compared to weekdays</td>
+                    <td><input type="radio" name="q1b_r1_4" value="0"></td> 
+                    <td><input type="radio" name="q1b_r1_4" value="1"></td>
+                    <td><input type="radio" name="q1b_r1_4" value="2"></td> 
+                    <td><input type="radio" name="q1b_r1_4" value="3"></td>
+                    <td><input type="radio" name="q1b_r1_4" value="4"></td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 100px;">
+                <input class="link-btn button" type="submit" value="Next page" />
+       
+            </p>
+        </form>
+    </div>
+
+    
+
+</body>

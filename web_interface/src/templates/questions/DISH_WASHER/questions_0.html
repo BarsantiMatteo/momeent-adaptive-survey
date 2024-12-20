@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+
+    <div class="questions-form"> 
+        <form  action="/tutorial" method="get">
+
+            <p><strong>How relevant are the following statements in describing when the dishwasher is used in your household?</strong></p>
+            
+            <table cellspacing="0" style="width: 100%;"> 
+                <tr >
+                    <th class="highlight-cell">The dishwasher is used,...</th> 
+                    <th class="highlight-cell">Not at all <br> relevant</th>
+                    <th class="highlight-cell">Slightly <br> relevant</th>
+                    <th class="highlight-cell">Moderately <br> relevant</th>
+                    <th class="highlight-cell">Very <br> relevant</th>
+                    <th class="highlight-cell">Extremely <br> relevant</th>
+                    <th class="highlight-cell">Does not <br> apply</th>
+                </tr>
+                <tr>
+                    <td >when it does not disturb my neighbors or myself/my household</td>
+                    <td><input type="radio" name="q0_r1_1" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_1" value="1"></td>
+                    <td><input type="radio" name="q0_r1_1" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_1" value="3"></td>
+                    <td><input type="radio" name="q0_r1_1" value="4"></td>
+                    <td><input type="radio" name="q0_r1_1" value="99"></td>
+                </tr>
+                <tr>
+                    <td >when electricity is cheaper</td>
+                    <td><input type="radio" name="q0_r1_2" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_2" value="1"></td>
+                    <td><input type="radio" name="q0_r1_2" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_2" value="3"></td>
+                    <td><input type="radio" name="q0_r1_2" value="4"></td>
+                    <td><input type="radio" name="q0_r1_2" value="99"></td>
+                </tr>
+                <tr>
+                    <td >when somebody is home to avoid the risk of appliance malfunctioning</td>
+                    <td><input type="radio" name="q0_r1_3" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_3" value="1"></td>
+                    <td><input type="radio" name="q0_r1_3" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_3" value="3"></td>
+                    <td><input type="radio" name="q0_r1_3" value="4"></td>
+                    <td><input type="radio" name="q0_r1_3" value="99"></td>
+                    </tr>
+                <tr>
+                    <td >when at least one item is needed soon</td>
+                    <td><input type="radio" name="q0_r1_4" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_4" value="1"></td>
+                    <td><input type="radio" name="q0_r1_4" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_4" value="3"></td>
+                    <td><input type="radio" name="q0_r1_4" value="4"></td>
+                    <td><input type="radio" name="q0_r1_4" value="99"></td>
+                </tr>
+                <tr>
+                    <td >when it is sunny to consume more energy from photovoltaic</td>
+                    <td><input type="radio" name="q0_r1_5" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_5" value="1"></td>
+                    <td><input type="radio" name="q0_r1_5" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_5" value="3"></td>
+                    <td><input type="radio" name="q0_r1_5" value="4"></td>
+                    <td><input type="radio" name="q0_r1_5" value="99"></td>
+                </tr>
+                <tr>
+                    <td >when power or water management allows</td>
+                    <td><input type="radio" name="q0_r1_6" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_6" value="1"></td>
+                    <td><input type="radio" name="q0_r1_6" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_6" value="3"></td>
+                    <td><input type="radio" name="q0_r1_6" value="4"></td>
+                    <td><input type="radio" name="q0_r1_6" value="99"></td>
+                </tr>
+                <tr>
+                    <td >whenever I/we have the time to run it, due to a very busy schedule</td>
+                    <td><input type="radio" name="q0_r1_7" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_7" value="1"></td>
+                    <td><input type="radio" name="q0_r1_7" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_7" value="3"></td>
+                    <td><input type="radio" name="q0_r1_7" value="4"></td>
+                    <td><input type="radio" name="q0_r1_7" value="99"></td>
+                </tr>
+                <tr>
+                    <td >when it is the habitual time, I/we like routines</td>
+                    <td><input type="radio" name="q0_r1_8" value="0"></td> 
+                    <td><input type="radio" name="q0_r1_8" value="1"></td>
+                    <td><input type="radio" name="q0_r1_8" value="2"></td> 
+                    <td><input type="radio" name="q0_r1_8" value="3"></td>
+                    <td><input type="radio" name="q0_r1_8" value="4"></td>
+                    <td><input type="radio" name="q0_r1_8" value="99"></td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 70px;">
+                <input class="link-btn button" type="submit" value="Next page" />
+            </p>
+        </form>
+    </div>
+
+    
+    
+</body>

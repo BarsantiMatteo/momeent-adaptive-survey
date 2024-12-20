@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+    
+    <div class="questions-form"> 
+        <form  action="/experiment_4" method="get">
+            
+            <p><strong>
+                To consume more energy from renewable sources (e.g. sun or wind), how likely are you or your household to implement the following actions?
+            </strong></p>
+            <table cellspacing="0" style="width: 100%;"> 
+                <tr >
+                    <th style="width: 50%;"class="highlight-cell"></th>
+                    <th class="highlight-cell">Not at all <br> likely</th> 
+                    <th class="highlight-cell">Not likely</th>
+                    <th class="highlight-cell">Somewhat <br> likely</th>
+                    <th class="highlight-cell">Likely</th>
+                    <th class="highlight-cell">Very likely</th>
+                </tr>
+                <tr>
+                    <td >To select washing programs with higher energy intensity (e.g., a higher washing temperature) only during periods when electricity from renewable source is highly available</td>
+                    <td><input type="radio" name="q3b_r1_1" value="0"></td> 
+                    <td><input type="radio" name="q3b_r1_1" value="1"></td>
+                    <td><input type="radio" name="q3b_r1_1" value="2"></td> 
+                    <td><input type="radio" name="q3b_r1_1" value="3"></td>
+                    <td><input type="radio" name="q3b_r1_1" value="4"></td>
+                    </tr>
+                <tr>
+                    <td >To schedule washing on days when more renewable power is available</td>
+                    <td><input type="radio" name="q3b_r1_2" value="0"></td> 
+                    <td><input type="radio" name="q3b_r1_2" value="1"></td>
+                    <td><input type="radio" name="q3b_r1_2" value="2"></td> 
+                    <td><input type="radio" name="q3b_r1_2" value="3"></td>
+                    <td><input type="radio" name="q3b_r1_2" value="4"></td>
+                    </tr>
+                <tr id="q3b_r1_3">
+                    <td >To use the tumble dryer only when more renewable power is available</td>
+                    <td><input type="radio" name="q3b_r1_3" value="0"></td> 
+                    <td><input type="radio" name="q3b_r1_3" value="1"></td>
+                    <td><input type="radio" name="q3b_r1_3" value="2"></td> 
+                    <td><input type="radio" name="q3b_r1_3" value="3"></td>
+                    <td><input type="radio" name="q3b_r1_3" value="4"></td>
+                    </tr>
+                  
+            </table>
+
+            <p style="margin-top: 100px;">
+                <input class="link-btn button" type="submit" value="Next page" />       
+            </p>
+        </form>
+    </div>
+
+    
+    <script>
+        var drying = {{data.drying|tojson}}
+        if (drying == "FALSE") {
+          document.getElementById("q3b_r1_3").remove()
+        }
+      </script>
+</body>

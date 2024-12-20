@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+    
+    <div class="questions-form"> 
+        <form  action="/appliance" method="get">
+            
+            <p><strong>Please select your country of residence:</strong></p>
+            <!--Single answer-->
+            <input type="radio" name="country" value="DE">Germany&emsp;&emsp;
+            <input type="radio" name="country" value="CH">Switzerland&emsp;&emsp;
+            <input type="radio" name="country" value="DE">Other&emsp;&emsp;
+
+            <br><br>
+
+            <p><strong>Which of the following best describes your household type?</strong></p>
+            <!--Single answer-->
+            <input type="radio" name="hh_type" value="1">Single person household<br>
+            <input type="radio" name="hh_type" value="2">Couple without children<br>
+            <input type="radio" name="hh_type" value="4">Couple with children<br>
+            <input type="radio" name="hh_type" value="3">Single parent with children<br>
+            <input type="radio" name="hh_type" value="5">Extended family<br>
+            <input type="radio" name="hh_type" value="5">Shared household<br>
+            <input type="radio" name="hh_type" value="5">Other<br>
+            
+            <p style="margin-top: 50px;">     
+                <input class="link-btn button" type="submit" value="Next page" />
+            </p>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/questions.js')}}"></script>
+
+</body>

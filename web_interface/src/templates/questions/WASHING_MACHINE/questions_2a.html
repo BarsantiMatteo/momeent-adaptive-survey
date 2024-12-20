@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div>   
+
+    <div class="questions-form"> 
+        <form  action="/questions_2b" method="get">
+            
+            <p><strong>
+                Assuming the scenario comes true, how likely is it that you will actually run the washing machine as you have indicated?
+            </strong></p>
+            <!--Single answer-->
+            <input type="radio" name="q2a_r1" value="1">Not at all likely&emsp;&emsp;
+            <input type="radio" name="q2a_r1" value="2">Not likely&emsp;&emsp;
+            <input type="radio" name="q2a_r1" value="3">Somewhat likely&emsp;&emsp;
+            <input type="radio" name="q2a_r1" value="4">Likely&emsp;&emsp;
+            <input type="radio" name="q2a_r1" value="5">Very likely
+
+            <br><br>    
+
+            <p><strong>
+                Assuming the scenario comes true, how could you/your household perform the new washing habits?
+            </strong></p>
+            <!--Single answer-->
+            <input type="radio" name="q2a_r2" value="1">Changing the routines and manually running the appliance when desired<br>
+            <input type="radio" name="q2a_r2" value="2">Using the automated programmer or start delay function<br>
+            <input type="radio" name="q2a_r2" value="3">Both of the above<br>
+            <input type="radio" name="q2a_r2" value="4">I would not adjust my washing habits<br>
+            
+            
+            <p style="margin-top: 100px;">
+                <input class="link-btn button" type="submit" value="Next page" />       
+            </p>
+
+        </form>
+    </div>
+
+    
+
+</body>

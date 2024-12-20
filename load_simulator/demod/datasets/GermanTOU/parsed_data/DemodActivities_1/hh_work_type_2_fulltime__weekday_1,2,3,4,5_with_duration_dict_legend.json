@@ -1,0 +1,15 @@
+{
+    "number of persons diaries": 1820,
+    "subgroup_kwargs": {
+        "hh_work_type": "2_fulltime",
+        "weekday": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ]
+    },
+    "cration date": "2022-08-12 10:47:15.411346",
+    "first_tpm_modification_algo": "nothing"
+}

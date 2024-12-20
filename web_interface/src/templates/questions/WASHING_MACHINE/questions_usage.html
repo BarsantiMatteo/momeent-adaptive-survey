@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>MoMeEnt</title>
+
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+    <div class="page-header"></div> 
+
+    <div class="questions-form"> 
+        
+        <form  action="/experiment_0" method="get">
+
+
+            <p><strong>How frequently is the laundry done in your household using the available washing machine?</strong></p>
+            <!--Single answer-->
+            <input type="radio" name="frequency_laundry" value="0.5">Around 1 load every two weeks or less<br>
+            <input type="radio" name="frequency_laundry" value="1">1 load per week<br>
+            <input type="radio" name="frequency_laundry" value="2">2 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="3">3 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="4">4 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="5">5 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="6">6 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="7">7 loads per week<br>
+            <input type="radio" name="frequency_laundry" value="8">8 loads per week or more<br>
+
+
+            <p><strong>Which of the following washing temperature is set when washing clothes?</strong></p>
+            
+            <table cellspacing="0" style="width: 100%;"> 
+                <tr >
+                    <th class="highlight-cell"></th> 
+                    <th class="highlight-cell">Never </th>
+                    <th class="highlight-cell">Very rarely </th>
+                    <th class="highlight-cell">Rarely</th>
+                    <th class="highlight-cell">Sometimes</th>
+                    <th class="highlight-cell">Often</th>
+                    <th class="highlight-cell">Very often</th>
+                    <th class="highlight-cell">Always</th>
+                </tr>
+                <tr>
+                    <td >30°c or below</td>
+                    <td><input type="radio" name="program30" value="1"></td> 
+                    <td><input type="radio" name="program30" value="2"></td>
+                    <td><input type="radio" name="program30" value="3"></td> 
+                    <td><input type="radio" name="program30" value="4"></td>
+                    <td><input type="radio" name="program30" value="5"></td>
+                    <td><input type="radio" name="program30" value="6"></td>
+                    <td><input type="radio" name="program30" value="7"></td>
+                </tr>
+                <tr>
+                    <td >40-45°C</td>
+                    <td><input type="radio" name="program40" value="1"></td> 
+                    <td><input type="radio" name="program40" value="2"></td>
+                    <td><input type="radio" name="program40" value="3"></td> 
+                    <td><input type="radio" name="program40" value="4"></td>
+                    <td><input type="radio" name="program40" value="5"></td>
+                    <td><input type="radio" name="program40" value="6"></td>
+                    <td><input type="radio" name="program40" value="7"></td>
+                </tr>
+                <tr>
+                    <td >55-60°C</td>
+                    <td><input type="radio" name="program60" value="1"></td> 
+                    <td><input type="radio" name="program60" value="2"></td>
+                    <td><input type="radio" name="program60" value="3"></td> 
+                    <td><input type="radio" name="program60" value="4"></td>
+                    <td><input type="radio" name="program60" value="5"></td>
+                    <td><input type="radio" name="program60" value="6"></td>
+                    <td><input type="radio" name="program60" value="7"></td>
+                    </tr>
+                <tr>
+                    <td >90°C</td>
+                    <td><input type="radio" name="program90" value="1"></td> 
+                    <td><input type="radio" name="program90" value="2"></td>
+                    <td><input type="radio" name="program90" value="3"></td> 
+                    <td><input type="radio" name="program90" value="4"></td>
+                    <td><input type="radio" name="program90" value="5"></td>
+                    <td><input type="radio" name="program90" value="6"></td>
+                    <td><input type="radio" name="program90" value="7"></td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 70px;">
+                <input class="link-btn button" type="submit" value="Next page" />
+            </p>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/questions.js')}}"></script>
+    
+</body>

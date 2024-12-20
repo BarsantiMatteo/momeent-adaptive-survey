@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>MoMeEnt</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.0/fullpage.min.css" />
+		
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+
+</head>
+
+<body>
+	<div id="fullPage"> 
+		
+		<div class="section s1">
+			<div class="page-content">
+
+					<img src="../static/img/intro_tutorial.JPG" class="img-tutorial" alt="tool" style="vertical-align:top">
+					<p>
+						<button class="link-btn" id="scroll-down" onclick="location.href='/experiment_1'">Start</button>
+					</p>
+		    </div>
+		</div>
+	</div>
+
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.0/fullpage.min.js"></script>
+	<script>
+		new fullpage('#fullPage',{
+				anchors: ['Title'],
+				autoScrolling : true,
+				navigation : true,
+				slidesNavigation : true,
+				controlArrows : false,
+				scrollingSpeed :1000,
+			navigationTooltips: [
+				"Title",
+			],
+			afterSlideLoad: function( section, origin, destination, direction){
+			var loadedSlide = this;
+			//load();
+			},
+		})
+	</script>
+
+</body>
+
+</html>
