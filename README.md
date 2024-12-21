@@ -34,16 +34,21 @@ The procedure is as follows:
 2. **Block B**: Respondents indicate typical washing times for appliances using sliders.
 
    <p align="center">
-     <img src="images/baseline.png" width="250">
+     <img src="images/baseline.png" width="500">
    </p>
 
 3. **Block B' (Backend)**: The tool estimates key performance indicators (KPIs) like yearly appliance costs, energy usage during peak hours, and the share of energy from renewable sources. A simplified version of [demod](https://github.com/epfl-herus/demod), a Python library for household energy demand simulation, is used for these calculations.
 
    <p align="center">
-     <img src="images/kpi_estimation.png" width="250">
+     <img src="images/kpi_estimation.png" width="500">
    </p>
 
 4. **Block C**: Respondents are presented with a scenario involving time-of-use tariffs. They adjust their washing times in response to fluctuating electricity prices.
+
+   <p align="center">
+     <img src="images/scenario1.png" width="500">
+   </p>
+
 5. **Block C' (Backend)**: KPIs are recalculated and compared to the baseline. The results are shared with respondents, allowing them to iterate and find their preferred configurations.
 
    ![KPI Estimation Procedure](images/scenario_comparison.png)
