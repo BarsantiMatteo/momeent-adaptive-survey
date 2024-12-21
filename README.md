@@ -2,7 +2,7 @@
 
 Welcome to the **momeent-adaptive-survey** repository! This repository hosts the implementation of a web-based interface for an innovative, simulation-driven adaptive survey approach.  
 
-Below we provide all the essential information to help you get started with the tool and its functionalities.
+Below, you will find all the essential information to get started with the tool and explore its functionalities.
 
 ---
 
@@ -12,9 +12,11 @@ Below we provide all the essential information to help you get started with the 
    - [Creating a Virtual Environment](#creating-a-virtual-environment)
    - [Installing the Requirements](#installing-the-requirements)
 3. [Running the Application](#running-the-application)
-4. [Browser Recommendations](#browser-recommendations)
+4. [Browser and Device Recommendations](#browser-and-device-recommendations)
 5. [How to Cite This Work](#how-to-cite-this-work)
-6. [License](#license)
+6. [Acknowledgments](#acknowledgments)
+7. [License](#license)
+8. [Contact](#contact)
 
 ---
 
