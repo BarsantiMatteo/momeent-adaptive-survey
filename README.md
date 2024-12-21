@@ -1,6 +1,8 @@
-# MoMeEnT-Project
+# MoMeEnT Adaptive Survey 
 
-Welcome to the **MoMeEnT-Project** repository! This project is part of the MoMeEnT initiative from the HERUS lab at EPFL. It contains the web interface implementation for the MoMeEnT system, designed for specific tasks and functionality. This README provides essential information to help you get started.
+Welcome to the **momeent-adaptive-survey** repository! This repository hosts the implementation of a web-based interface for an innovative, simulation-driven adaptive survey approach.  
+
+Below we provide all the essential information to help you get started with the tool and its functionalities.
 
 ---
 
@@ -18,56 +20,82 @@ Welcome to the **MoMeEnT-Project** repository! This project is part of the MoMeE
 
 ## Overview
 
-The **MoMeEnT-Project** is a simplified version of the original system described in the paper *[XXX]*. The original implementation was integrated with the Qualtrics survey platform. Below, the overall survey structure is illustrated:
+### What is a simulation-driven adaptive survey?
+A simulation-driven adaptive survey integrates dynamic feedback loops between survey data and simulation models. Through an iterative process, respondents provide data about their characteristics and behavior (e.g., sociodemographics, appliance usage), which parametrizes and runs the model. The model generates personalized indicator scores (e.g., energy consumption patterns). These scores are shared in near real-time, helping participants understand the impact of their choices and encouraging informed adjustments.
+
+### How does it work?
+Simulation-driven adaptive surveys can be implemented in various ways, tailored to different purposes. This implementation investigates user preferences for load-shifting in energy consumption. The survey flow and functionalities are illustrated below:
 
 ![Survey flow chart](images/survey_framework.png)
 
-The figure highlights the original structure. A detailed view of the procedure for calculating and comparing Key Performance Indicators (KPIs) used as feedback for respondents is shown below:
+The procedure is as follows:
 
-![KPI Estimation Procedure](images/kpi_estimation.png)
+1. **Block A**: Respondents answer introductory questions about their sociodemographic characteristics (e.g., household size, type) and appliance usage behavior (e.g., frequency of dishwasher use).
+2. **Block B**: Respondents indicate typical washing times for appliances using sliders.
 
-This repository provides a simplified version of the system implemented entirely in Python using the Flask framework. The application allows users to test the approach locally.
+   <p align="center">
+     <img src="images/baseline.png" width="250">
+   </p>
+
+3. **Block B' (Backend)**: The tool estimates key performance indicators (KPIs) like yearly appliance costs, energy usage during peak hours, and the share of energy from renewable sources. A simplified version of [demod](https://github.com/epfl-herus/demod), a Python library for household energy demand simulation, is used for these calculations.
+
+   <p align="center">
+     <img src="images/kpi_estimation.png" width="250">
+   </p>
+
+4. **Block C**: Respondents are presented with a scenario involving time-of-use tariffs. They adjust their washing times in response to fluctuating electricity prices.
+5. **Block C' (Backend)**: KPIs are recalculated and compared to the baseline. The results are shared with respondents, allowing them to iterate and find their preferred configurations.
+
+   ![KPI Estimation Procedure](images/scenario_comparison.png)
+
+6. **Blocks D-F**: Additional scenarios are introduced, such as grid congestion or increasing renewable energy usage. Respondents adjust behaviors iteratively to explore trade-offs.
+
+### Why use a simulation-driven adaptive survey?
+Traditional surveys with fixed-choice questions often fail to capture the complexities of user behavior, especially in energy consumption and demand-side flexibility. Simulation-driven adaptive surveys address this by integrating energy demand models, enabling respondents to make complex decisions in a tailored and interactive way.
+
+### Current Version
+The **momeent-adaptive-survey** is a simplified version of the original survey described in *[Reference Paper]*. It is implemented as a Flask-based application, available in English, and designed for local testing.
 
 ---
 
 ## Installation
 
-Follow these steps to set up the project on your system. It is highly recommended to use a virtual environment to manage dependencies.
+Follow these steps to set up the project. We recommend using a virtual environment to manage dependencies.
 
 ### Creating a Virtual Environment
 
-1. **Install `virtualenv`** (if not already installed):
+1. **Install `virtualenv`**:
    ```bash
    pip install virtualenv
    ```
 
-2. **Create a virtual environment** in your project directory:
+2. **Create a virtual environment**:
    ```bash
-   virtualenv venv
+   virtualenv venv_name
    ```
 
 3. **Activate the virtual environment**:
    - **Windows**:
      ```bash
-     venv\Scripts\activate
+     venv_name\Scripts\activate
      ```
    - **macOS/Linux**:
      ```bash
-     source venv/bin/activate
+     source venv_name/bin/activate
      ```
 
-   After activation, `(venv)` should appear in your terminal prompt.
+   After activation, `(venv_name)` should appear in your terminal prompt.
 
 ### Installing the Requirements
 
 1. **Clone the repository**:
    ```bash
-   git clone git@github.com:ghalifaten/MoMeEnT-Project.git
+   git clone https://github.com/BarsantiMatteo/momeent-adaptive-survey.git
    ```
 
 2. **Navigate to the project directory**:
    ```bash
-   cd MoMeEnT-Project
+   cd momeent-adaptive-survey
    ```
 
 3. **Install dependencies**:
@@ -75,18 +103,16 @@ Follow these steps to set up the project on your system. It is highly recommende
    pip install -r requirements.txt
    ```
 
-This will install all the necessary Python libraries listed in the `requirements.txt` file.
-
 ---
 
 ## Running the Application
 
 1. **Start the Flask server**:
    ```bash
-   python3 web_interface/src/main.py
+   python web_interface/src/main.py
    ```
 
-   You should see output like this:
+   You should see output similar to this:
    ```
    * Serving Flask app 'main'
    * Debug mode: on
@@ -101,23 +127,29 @@ This will install all the necessary Python libraries listed in the `requirements
 
 ---
 
-## Browser Recommendations
+## Browser and Device Recommendations
 
-For the best experience, please use **Firefox**. Some features might not function as intended on other browsers. Note that this application is optimized for use on computer displays, and everything runs locally on your machine. 
+For the best experience:
+- Use **Firefox**. Some features may not work as intended on other browsers.
+- Use a computer (PC or notebook) display. Mobile devices are not supported.
 
-In the original version, the backend model was deployed on AWS servers, but this simplified version is fully self-contained.
+Note: The original version used AWS servers for the backend model. This simplified version runs entirely on your local machine.
 
 ---
 
 ## How to Cite This Work
 
-If you use the **MoMeEnT-Project** in your research, please cite it as follows:
+If you use the **momeent-adaptive-survey** in your research, please cite it as follows:
 
 ```
 [Author(s)], "MoMeEnT-Project: Web Interface for MoMeEnT System", HERUS Lab, EPFL, Year.
 ```
 
-For additional citation details, contact us at [your_email@example.com].
+---
+
+## Acknowledgments
+
+This tool was developed as part of the MoMeEnT project, a collaboration between École Polytechnique Fédérale de Lausanne (EPFL) and the University of Oldenburg. The project was funded by the Swiss National Science Foundation (SNSF project number: 182878) and the Deutsche Forschungsgemeinschaft (DFG project number: LE 3131/8-1).
 
 ---
 
@@ -127,4 +159,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Feel free to reach out with any questions or issues you encounter.
+## Contact
+
+For questions or issues, feel free to reach out at [your_email@example.com].
