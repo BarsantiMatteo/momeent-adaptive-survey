@@ -1,136 +1,89 @@
 
-
 from flask import Flask, request, render_template, jsonify, session, abort
 import os, sys, json
 import datetime
 import numpy as np
-import secrets
-import conf.credentials as conf
 import math 
 from decimal import Decimal
 import pandas as pd
+import secrets
+import conf.credentials as conf
 
-#module_path = "/home/faten/HERUS/MoMeEnT-Project/web_interface/src/" #TODO change this
-module_path1 = os.path.abspath(os.path.join('..')) + '/adaptive-survey'
-module_path2 = module_path1 +'/load_simulator'
-module_path3 = module_path2 +'/demod'
-for mpath in [module_path1, module_path2, module_path3]:
-    print(mpath)
-    if mpath not in sys.path:
-        sys.path.append(mpath)
+from utils import (
+    process_data, generate_profile, min_profile_from_val_period
+)
+from config import (
+    n_households, usage_patterns, price_dict_CH, price_dict_DE, RES_dict
+)
 
-from load_simulator.demod_load_simulator import get_avg_load_profile
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..','load_simulator'))
+from demod_load_simulator import get_avg_load_profile
 
 
 #---- SET UP PATH ----#
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-
-#---- SET UP CONNECTIONS ----#
-#client = boto3.client('lambda',
-#                        region_name= conf.region,
-#                        aws_access_key_id=conf.aws_access_key_id,
-#                       aws_secret_access_key=conf.aws_secret_access_key)
-
+#---- INITIALIZE FLASK APP ----#
 app = Flask(__name__, template_folder='templates')
-app.secret_key = app.secret_key = conf.flask_secret_key
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
+
+#---- LOAD STATIC DATA ----#
+DATA_FILE = os.path.join(os.path.dirname(__file__), "static/data/vals_peer_comparison.csv")
+df = pd.read_csv(DATA_FILE)
 
 
-#---- INITIALIZE VARIABLES ----#
-n_households = 500
-usage_patterns = {'target_cycles':{'DISH_WASHER':251,
-                                   'WASHING_MACHINE':100},
-                  'day_prob_profiles':{'DISH_WASHER':np.ones((n_households, 24)).tolist(),  
-                                       'WASHING_MACHINE':np.ones((n_households,24)).tolist()
-                                       },
-                    'energy_cycle': {'DISH_WASHER': 1, 
-                                     'WASHING_MACHINE':1}
-                }
-
-df = pd.read_csv(dir_path+"/static/data/vals_peer_comparison.csv")
-
-price_dict = {}
-
-price_dict_DE = {'morning':0.467,
-              'midday':0.334, 
-              'afternoon':0.346, 
-              'evening':0.512,
-              'night':0.375
-              }
-price_dict_CH = {'morning':0.310,
-              'midday':0.222, 
-              'afternoon':0.229, 
-              'evening':0.340,
-              'night':0.249
-              }
-
-RES_dict = {'morning':47.8,
-              'midday':69.9, 
-              'afternoon':33.3, 
-              'evening':0,
-              'night':0
-              }
-
-#---- FUNCTIONS AND POST METHODS----#
-def process_data(data):
-    values_dict = {}
-    for d in data:
-        key = d["Period"].split()[0] #remove the additional information of time between ()
-        value = d["Value"]
-        values_dict[key] = int(value) #values_dict has the format: {'morning': 0, 'midday': 1, 'afternoon': 2, 'evening': 3, 'night': 4}
-    return values_dict
-
+# ---- UTILITY FUNCTIONS ---- #
 def calculate_params(load):
+    """
+    Calculates cost, renewable energy share, and peak load percentage based on the load profile.
+    """
     price_dict = session["price_dict"]
-    price = min_profile_from_val_period(price_dict)
-    unit_conv = 1 / 60 / 1000 * 365.25 
-    cost = np.sum(load * price * unit_conv)
-    local_generation = min_profile_from_val_period(RES_dict)
-    res_share = np.sum(load * local_generation / np.sum(load))
-    peak_load = np.sum(load[14*60:22*60])/np.sum(load)*100
-    return (cost, res_share, peak_load)
+    price_profile = min_profile_from_val_period(price_dict)
+    unit_conversion = 1 / (60 * 1000) * 365.25
 
-def get_load(data):   
+    # Total cost calculation
+    cost = np.sum(load * price_profile * unit_conversion)
+
+    # Renewable energy share calculation
+    local_generation_profile = min_profile_from_val_period(RES_dict)
+    res_share = np.sum(load * local_generation_profile) / np.sum(load)
+
+    # Peak load percentage calculation (2 PM to 10 PM)
+    peak_load = np.sum(load[14 * 60:22 * 60]) / np.sum(load) * 100
+
+    return cost, res_share, peak_load
+
+def get_load(data):
+    """
+    Generates the load profile for a household based on session parameters and input data.
+    """
     n_residents = session["hh_size"]
     household_type = session["hh_type"]
     appliance = session["appliance"]
-    #generate profile and update usage_patterns
+
+    # Process input data to create values_dict
     values_dict = process_data(data)
-    profile = generate_profile(values_dict) # (24,) --> (n_households, 24)
-    profiles = np.array([profile for _ in range(n_households)]).tolist()
+
+    # Generate daily profile
+    profile = generate_profile(values_dict)
+
+    # Create profiles for all households
+    profiles = np.tile(profile, (n_households, 1)).tolist()
     usage_patterns["day_prob_profiles"][appliance] = profiles
 
     # Estimate the load profile
-    load = get_avg_load_profile(n_residents=n_residents,
-                                household_type=household_type,
-                                usage_patterns=usage_patterns,
-                                appliance=appliance, 
-                                n_households=n_households)
+    load = get_avg_load_profile(
+        n_residents=n_residents,
+        household_type=household_type,
+        usage_patterns=usage_patterns,
+        appliance=appliance,
+        n_households=n_households
+    )
 
     return load
 
-def generate_profile(values_dict):
-    # the profile should be time shifted as demod probability functions start at 4:00 am
-    raw_profile = np.asarray([values_dict['night']] * 2  + \
-                             [values_dict['morning']] * 4  + \
-                             [values_dict['midday']] * 4  + \
-                             [values_dict['afternoon']] * 4  + \
-                             [values_dict['evening']] * 4  + \
-                             [values_dict['night']] * 6 
-                            )
-    return raw_profile 
-
-def min_profile_from_val_period(period_dict):
-    profile = np.asarray([period_dict['night']] * 6 * 60 + \
-                        [period_dict['morning']] * 4 * 60 + \
-                        [period_dict['midday']] * 4 * 60+ \
-                        [period_dict['afternoon']] * 4 * 60+ \
-                        [period_dict['evening']] * 4 * 60+ \
-                        [period_dict['night']] * 2 * 60
-                        )
-    return profile
-
-
+def format_app(appliance):
+    return appliance.replace("_", " ").lower()
 
 @app.route('/get-baseline-values', methods=['POST'])
 def get_baseline_values():
@@ -149,7 +102,6 @@ def get_baseline_values():
     }
     return jsonify(response)
 
-#TODO remove useless variables from session (first and last trial etc ...)
 @app.route('/get-cost', methods=['POST'])
 def get_cost():
     data = request.get_json()['data']
@@ -256,13 +208,7 @@ def get_3_values():
                                 "res_share": res_share}
     return jsonify(response)
 
-def format_app(appliance):
-    if appliance == "WASHING_MACHINE":
-        return "washing machine"
-    elif appliance == "DISH_WASHER":
-        return "dish washer"
-
-#---- ROUTES ----#
+# ---- ROUTE HANDLERS ---- #
 @app.route('/') 
 def _index():
     peer = "TRUE"
