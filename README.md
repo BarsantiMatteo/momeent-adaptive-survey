@@ -1,6 +1,6 @@
 # MoMeEnT Adaptive Survey 
 
-Welcome to the **momeent-adaptive-survey** repository! This repository hosts the implementation of a web-based interface for an innovative, simulation-driven adaptive survey approach.  
+Welcome to the **momeent-adaptive-survey** repository! This repository hosts the implementation of a web-based interface for an innovative, model-driven adaptive survey approach.  
 
 Below, you will find all the essential information to get started with the tool and explore its functionalities.
 
@@ -22,11 +22,11 @@ Below, you will find all the essential information to get started with the tool 
 
 ## Overview
 
-### What is a simulation-driven adaptive survey?
-A simulation-driven adaptive survey integrates dynamic feedback loops between survey data and simulation models. Through an iterative process, respondents provide data about their characteristics and behavior (e.g., sociodemographics, appliance usage), which parametrizes and runs the model. The model generates personalized indicator scores (e.g., energy consumption patterns). These scores are shared in near real-time, helping participants understand the impact of their choices and encouraging informed adjustments.
+### What is a model-driven adaptive survey?
+A model-driven adaptive survey integrates dynamic feedback loops between survey data and simulation models. Through an iterative process, respondents provide data about their characteristics and behavior (e.g., sociodemographics, appliance usage), which parametrizes and runs the model. The model generates personalized indicator scores (e.g., energy consumption patterns). These scores are shared in near real-time, helping participants understand the impact of their choices and encouraging informed adjustments.
 
 ### How does it work?
-Simulation-driven adaptive surveys can be implemented in various ways, tailored to different purposes. This implementation investigates user preferences for load-shifting in energy consumption. The survey flow and functionalities are illustrated below:
+Model-driven adaptive surveys can be implemented in various ways, tailored to different purposes. This implementation investigates user preferences for load-shifting in energy consumption. The survey flow and functionalities are illustrated below:
 
 ![Survey flow chart](images/survey_framework.png)
 
@@ -57,11 +57,13 @@ The procedure is as follows:
 
 6. **Blocks D-F**: Additional scenarios are introduced, such as grid congestion or increasing renewable energy usage. Respondents adjust behaviors iteratively to explore trade-offs.
 
-### Why use a simulation-driven adaptive survey?
-Traditional surveys with fixed-choice questions often fail to capture the complexities of user behavior, especially in energy consumption and demand-side flexibility. Simulation-driven adaptive surveys address this by integrating energy demand models, enabling respondents to make complex decisions in a tailored and interactive way.
+### Why use a model-driven adaptive survey?
+Traditional surveys with fixed-choice questions often fail to capture the complexities of user behavior, especially in energy consumption and demand-side flexibility. Model-driven adaptive surveys address this by integrating energy demand models, enabling respondents to make complex decisions in a tailored and interactive way.
 
 ### Current Version
 The **momeent-adaptive-survey** is a simplified version of the original survey described in *[Reference Paper]*. It is implemented as a Flask-based application, available in English, and designed for local testing.
+
+Unlike the original version, which utilized AWS servers for backend processing, this simplified version operates entirely on your local machine. As a result, you may experience slight delays when loading results or switching pages. Thank you for your patience! 😊
 
 ---
 
