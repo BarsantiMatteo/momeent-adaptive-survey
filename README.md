@@ -61,7 +61,7 @@ The procedure is as follows:
 Traditional surveys with fixed-choice questions often fail to capture the complexities of user behavior, especially in energy consumption and demand-side flexibility. Model-driven adaptive surveys address this by integrating energy demand models, enabling respondents to make complex decisions in a tailored and interactive way.
 
 ### Current Version
-The **momeent-adaptive-survey** is a simplified version of the original survey described in *[Reference Paper]*. It is implemented as a Flask-based application, available in English, and designed for local testing.
+The **momeent-adaptive-survey** is a simplified version of the original survey described [here](https://www.sciencedirect.com/science/article/pii/S221462962500012X?via%3Dihub). It is implemented as a Flask-based application, available in English, and designed for local testing.
 
 Unlike the original version, which utilized AWS servers for backend processing, this simplified version operates entirely on your local machine. As a result, you may experience slight delays when loading results or switching pages. Thank you for your patience! 😊
 
@@ -151,7 +151,7 @@ Note: The original version used AWS servers for the backend model. This simplifi
 If you use the **momeent-adaptive-survey** in your research, please cite it as follows:
 
 ```
-[Author(s)], "MoMeEnT-Project: Web Interface for MoMeEnT System", HERUS Lab, EPFL, Year.
+Barsanti, M., Schwarz, J. S., Ghali, F., Yilmaz, S., Lehnhoff, S., & Binder, C. R. (2025). Load-shifting for cost, carbon, and grid benefits: A model-driven adaptive survey with German and Swiss households. *Energy Research & Social Science, 121*, 103931. https://doi.org/10.1016/j.erss.2025.103931
 ```
 
 ---
@@ -170,4 +170,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For questions or issues, feel free to reach out at [your_email@example.com].
+For questions, issues or chatting about related ideas, feel free to reach out at matteo.barsanti17@gmail.com.
