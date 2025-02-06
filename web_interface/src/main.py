@@ -151,15 +151,15 @@ def get_cost():
 def get_peak_load():
     data = request.get_json()['data']
     load = get_load(data) 
-    #calculate peak load
+    #Calculate peak load
     peak_load = np.sum(load[14*60:22*60])/np.sum(load)*100
-    #send baseline peak load along with peak load
+    #Send baseline peak load along with peak load
     baseline_peak_load = session["baseline_peak_load"]
     response = {
         "baseline_peak_load": math.trunc(baseline_peak_load), 
         "peak_load": math.trunc(peak_load)
         }
-    #save first trial
+    #Save first trial
     if (session["trial"] == 0):
         session["sc2_peak_load_first"] = peak_load
         session["trial"] += 1

@@ -139,7 +139,7 @@ Follow these steps to set up the project. We recommend using a virtual environme
 ## Browser and Device Recommendations
 
 For the best experience:
-- Use **Firefox**. Some features may not work as intended on other browsers.
+- Use **Firefox**.  Some features may not work as intended on other browsers.
 - Use a computer (PC or notebook) display. Mobile devices are not supported.
 
 Note: The original version used AWS servers for the backend model. This simplified version runs entirely on your local machine.
