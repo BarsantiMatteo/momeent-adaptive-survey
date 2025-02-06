@@ -1,3 +1,19 @@
+'''
+Copyright (C) [year] [Your Name]
+
+This program is free software: you can redistribute it and/or modify  
+it under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.  
+
+This program is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the  
+GNU General Public License for more details.  
+
+You should have received a copy of the GNU General Public License  
+along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
+'''
 
 from flask import Flask, request, render_template, jsonify, session, abort
 import os, sys, json
@@ -89,7 +105,7 @@ def format_app(appliance):
 def get_baseline_values():
     data = request.get_json()['data']
     load = get_load(data) 
-    #claculate (baseline) cost, share, and peak
+    #calculate (baseline) cost, share, and peak
     (cost, res_share, peak_load) = calculate_params(load)
     session["baseline_cost"] = cost
     session["baseline_peak_load"] = peak_load
@@ -106,7 +122,7 @@ def get_baseline_values():
 def get_cost():
     data = request.get_json()['data']
     load = get_load(data) 
-    #claculate cost
+    #calculate cost
     price_dict = session["price_dict"]
     price = min_profile_from_val_period(price_dict)
     unit_conv = 1 / 60 / 1000 * 365.25 
@@ -135,7 +151,7 @@ def get_cost():
 def get_peak_load():
     data = request.get_json()['data']
     load = get_load(data) 
-    #claculate peak load
+    #calculate peak load
     peak_load = np.sum(load[14*60:22*60])/np.sum(load)*100
     #send baseline peak load along with peak load
     baseline_peak_load = session["baseline_peak_load"]
@@ -157,7 +173,7 @@ def get_peak_load():
 def get_res_share():
     data = request.get_json()['data']
     load = get_load(data) 
-    #claculate peak load
+    #calculate peak load
     local_generation = min_profile_from_val_period(RES_dict)
     res_share = np.sum(load * local_generation / np.sum(load))
     #send baseline RES load along with new RES load
@@ -180,7 +196,7 @@ def get_res_share():
 def get_3_values():
     data = request.get_json()['data']
     load = get_load(data) 
-    #claculate cost, share, and peak
+    #calculate cost, share, and peak
     (cost, res_share, peak_load) = calculate_params(load)
     #send baseline values along with new values
     baseline_cost = session["baseline_cost"]
@@ -216,7 +232,8 @@ def _index():
     session["peer"] = peer
     session["drying"] = drying
 
-    return render_template("index.html", appliance=format_app(appliance))
+    return render_template("index.html")
+    #return render_template("index.html", appliance=format_app(appliance))
 
 @app.route('/socio_demo')
 def socio_demo():
